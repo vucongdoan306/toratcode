@@ -12,6 +12,7 @@
             v-for="(item, index) in fileName"
             :key="item.src"
             :style="{ right: `${index * (20+spaceValue)}px` }"
+            @click="$emit('selected-card',item.src)"
           >
             <single-card :srcCard="item.src" :cantRotate="true"></single-card>
           </div>

@@ -1,10 +1,11 @@
 <template>
   <div>
     <!-- <div v-for="item in fileName" :key="item.src">
-      <single-card :srcCard="item.src"></single-card>
     </div> -->
     <single-deck></single-deck>
-    <spread-cards></spread-cards>
+    <spread-cards @selected-card="getItemCard"></spread-cards>
+    <single-card v-if="srcCard" :srcCard="srcCard" ></single-card>
+
   </div>
 </template>
 <script>
@@ -22,6 +23,16 @@ export default {
     SingleCard,
     SingleDeck,
     SpreadCards,
+  },
+  data() {
+    return {
+      srcCard: ''
+    }
+  },
+  methods: {
+    getItemCard(val){
+      this.srcCard = val;
+    }
   },
 };
 </script>
