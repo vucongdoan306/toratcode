@@ -30,7 +30,7 @@
 <script>
 import SingleCard from "./bases/cards/SingleCard.vue";
 import SingleDeck from "./bases/decks/SingleDeck.vue";
-import SpreadCards from "./bases/Spread /SpreadCards.vue";
+import SpreadCards from "./bases/Spread/SpreadCards.vue";
 import { fileName } from "/src/constants/dataCard.js";
 export default {
   setup(props) {
