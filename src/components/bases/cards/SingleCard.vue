@@ -3,15 +3,28 @@
     <div
       class="single-card"
       @click="rotateSingleCard()"
-      :class="!isRotate ? ' single-card-rotate' : ''"
+      :class="[!isRotate||cantRotate ? ' single-card-rotate' : '', cantRotate?' single-card-hover-light': '']"
     >
-      <div class="single-card-face single-card-front"></div>
+      <div class="single-card-face single-card-front" :style="{'background-image': `url(${getImgCard(srcCard)})`}"></div>
       <div class="single-card-face single-card-back"></div>
     </div>
   </div>
 </template>
 <script>
+import {getImgCard} from '/src/constants/commonFunc.js'
 export default {
+  props:{
+    srcCard: String,
+    cantRotate:{
+      Type: Boolean,
+      Default: true
+    }
+  },
+  setup(){
+    return {
+      getImgCard
+    }
+  },
   data() {
     return {
       isRotate: false,
@@ -26,12 +39,10 @@ export default {
 </script>
 <style lang="scss">
 .single-card-container {
-  margin-top: 100px;
   width: 200px;
   height: 330px;
   perspective: 600px;
-}
-.single-card {
+  .single-card {
   border: 1px solid black;
   width: 200px;
   height: 330px;
@@ -57,6 +68,8 @@ export default {
 }
 .single-card-front {
   background-color: lavender;
+  background-size: 200px 330px;
+
 }
 .single-card-back {
   transform: rotateY(180deg);
@@ -64,4 +77,10 @@ export default {
   background-size: 200px 330px;
   background-repeat: no-repeat;
 }
+
+  .single-card-hover-light:hover{
+    box-shadow: 0px 5px 10px 0px rgba(0,255,255,0.7);  
+  }
+}
+
 </style>

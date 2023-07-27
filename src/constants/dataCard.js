@@ -1,4 +1,4 @@
-[
+const fileName = [
   { src: "the-fool.jpg" },
   { src: "the-magician.jpg" },
   { src: "the-high-priestess.jpg" },
@@ -79,3 +79,8 @@
   { src: "queen-of-wands.jpg" },
   { src: "king-of-wands.jpg" },
 ];
+
+
+export {
+  fileName
+}
