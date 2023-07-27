@@ -2,10 +2,29 @@
   <div>
     <!-- <div v-for="item in fileName" :key="item.src">
     </div> -->
-    <single-deck></single-deck>
-    <spread-cards @selected-card="getItemCard"></spread-cards>
-    <single-card v-if="srcCard" :srcCard="srcCard" ></single-card>
+    <single-deck
+      v-show="!isShowSpread"
+      @click="
+        () => {
+          this.isShowSpread = !this.isShowSpread;
+        }
+      "
+    ></single-deck>
+    <transition-group fade>
+      <spread-cards
+        @selected-card="getItemCard"
+        v-if="isShowSpread"
+        :removeCard="srcCard"
+      ></spread-cards>
+    </transition-group>
 
+    <div class="selected-card-container">
+      <transition-group name="fade">
+        <div class="selected-card-item" v-for="item in listCardSelected" :key="item" >
+          <single-card :srcCard="item"></single-card>
+        </div>
+      </transition-group>
+    </div>
   </div>
 </template>
 <script>
@@ -24,16 +43,47 @@ export default {
     SingleDeck,
     SpreadCards,
   },
-  data() {
-    return {
-      srcCard: ''
+  props:{
+    maxLength: {
+      type: Number,
+      default: 3,
     }
   },
+  data() {
+    return {
+      srcCard: "",
+      isShowSpread: false,
+      listCardSelected: []
+    };
+  },
   methods: {
-    getItemCard(val){
-      this.srcCard = val;
-    }
+    getItemCard(val) {
+      if(this.listCardSelected.length < this.maxLength){
+        this.srcCard = val;
+        this.listCardSelected.push(val);
+      }
+    },
   },
 };
 </script>
-<style lang=""></style>
+<style lang="scss">
+/* we will explain what these classes do next! */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.selected-card-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  .selected-card-item{
+    margin: 0 10px;
+  }
+}
+</style>
