@@ -16,7 +16,7 @@
           right: `${Math.floor(index / 4) * 2}px`,
         }"
       >
-        <single-card :cantRotate="true" :srcCard="item.src"></single-card>
+        <single-card :backImgCard="backImgCard" :cantRotate="true" :srcCard="item.src"></single-card>
       </div>
     </div>
   </div>
@@ -29,6 +29,12 @@ export default {
     return {
       fileName,
     };
+  },
+  props:{
+    backImgCard:{
+      type: String,
+      default: "behind1.jpg"
+    }
   },
   components: { SingleCard },
 };

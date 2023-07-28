@@ -9,7 +9,12 @@
       <el-scrollbar always>
         <div
           class="spread-cards-main"
-          :class="[(countSelect<maxLength||(countSelect>=maxLength && countPlusCard>0))?'':' opt-90']"
+          :class="[
+            countSelect < maxLength ||
+            (countSelect >= maxLength && countPlusCard > 0)
+              ? ''
+              : ' opt-90',
+          ]"
           :style="{
             width: `${fileName.length * (20 + spaceValue) + 200}px`,
             height: '340px',
@@ -22,21 +27,30 @@
             :style="{ right: `${index * (20 + spaceValue)}px` }"
             @click="selectCard(item)"
           >
-            <single-card :srcCard="item.src" :cantRotate="true"></single-card>
+            <single-card
+              :srcCard="item.src"
+              :cantRotate="true"
+              :backImgCard="backImgCard"
+            ></single-card>
           </div>
         </div>
       </el-scrollbar>
       <div class="spread-more-container">
         <transition name="fade">
           <div class="button-add" v-if="countSelect >= maxLength">
-            <el-button type="primary" color="#bdc5cc" dark :icon="Pointer" @click="plusCard()"
+            <el-button
+              type="primary"
+              color="#bdc5cc"
+              dark
+              :icon="Pointer"
+              @click="plusCard()"
               >Chọn thêm</el-button
             >
           </div>
         </transition>
         <transition name="fade">
-          <div class="spread-tag" v-if="countPlusCard>0">
-            <el-tag class="ml-2" type="info">{{ "+"+ countPlusCard }}</el-tag>
+          <div class="spread-tag" v-if="countPlusCard > 0">
+            <el-tag class="ml-2" type="info">{{ "+" + countPlusCard }}</el-tag>
           </div>
         </transition>
       </div>
@@ -46,13 +60,17 @@
 <script>
 import SingleCard from "../cards/SingleCard.vue";
 import { fileName } from "../../../constants/dataCard.js";
-import { shuffleArray } from "../../../constants/commonFunc";
+import {
+  magicShuffle,
+  stoneShuffle,
+  flowerShuffle,
+} from "../../../constants/commonFunc";
 import { Pointer } from "@element-plus/icons-vue";
 export default {
   setup(props) {
     return {
       fileName,
-      shuffleArray,
+      magicShuffle,
       Pointer,
     };
   },
@@ -72,14 +90,24 @@ export default {
       type: Number,
       default: 3,
     },
+    backImgCard: {
+      type: String,
+      default: "behind1.jpg",
+    },
   },
   created() {
     switch (this.typeDraw) {
       case 1:
-        this.dataFileName = shuffleArray(fileName);
+        this.dataFileName = magicShuffle(fileName);
+        break;
+      case 2:
+        this.dataFileName = stoneShuffle(fileName);
+        break;
+      case 3:
+        this.dataFileName = flowerShuffle(fileName);
         break;
       default:
-        this.dataFileName = shuffleArray(fileName);
+        this.dataFileName = magicShuffle(fileName);
         break;
     }
   },
@@ -99,22 +127,22 @@ export default {
       dataFileName: [],
       isMounted: false,
       countSelect: 0,
-      countPlusCard: 0
+      countPlusCard: 0,
     };
   },
   methods: {
     selectCard(item) {
       if (this.countSelect < this.maxLength) {
         this.$emit("selected-card", item.src);
-      } else if(this.countPlusCard>0){
+      } else if (this.countPlusCard > 0) {
         this.countPlusCard--;
         this.$emit("more-card", item.src);
       }
     },
 
-    plusCard(){
+    plusCard() {
       this.countPlusCard++;
-    }
+    },
   },
 };
 </script>

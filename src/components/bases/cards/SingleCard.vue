@@ -6,7 +6,7 @@
       :class="[!isRotate||cantRotate ? ' single-card-rotate' : '', cantRotate?' single-card-hover-light': '']"
     >
       <div class="single-card-face single-card-front" :style="{'background-image': `url(${getImgCard(srcCard)})`}"></div>
-      <div class="single-card-face single-card-back"></div>
+      <div class="single-card-face single-card-back" :style="{'background-image': `url(${getImgCard(backImgCard)})`}"></div>
     </div>
   </div>
 </template>
@@ -18,6 +18,10 @@ export default {
     cantRotate:{
       Type: Boolean,
       Default: true
+    },
+    backImgCard:{
+      type: String,
+      default: "behind1.jpg"
     }
   },
   setup(){
