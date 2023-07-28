@@ -12,6 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --color-button: #bdc5cc;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(./assets/fonts/Roboto-Regular.ttf);
 }
 
 a {
@@ -84,4 +90,24 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+.el-button {
+  font-family: Roboto;
+}
+
+/* we will explain what these classes do next! */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.opt-90{
+  opacity: 0.9;
 }

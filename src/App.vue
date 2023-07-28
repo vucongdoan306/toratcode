@@ -1,10 +1,10 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import TheSelectCard from './components/bases/tarot/TheSelectCard.vue'
 </script>
 
 <template>
 
-  <HelloWorld msg="Vite + Vue" />
+  <TheSelectCard msg="Vite + Vue" />
 </template>
 
 <style scoped>
